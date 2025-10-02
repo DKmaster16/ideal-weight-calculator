@@ -114,7 +114,7 @@
 				<option value="-0.04">Sedentary</option>
 				<option value="0.0">Non-sedentary</option>
 				<option value="0.04">Fit</option>
-				<option value="0.08">Moderately muscular</option>
+				<option value="0.08">Athletic</option>
 				<option value="0.12">Muscular</option>
 				<option value="0.16">Highly muscular</option>
 			</select>
@@ -142,7 +142,7 @@
 				<option value="0.05">Long</option>
 			</select>
 
-			<label for="torso">Ape Index: 
+			<label for="ape">Ape Index: 
 			<span class="tooltip">❔<img src="ape_index.png" alt="ape index guide img" ></span></label>
 			<select id="ape">
 				<option value="0">less than 5cm</option>
@@ -281,6 +281,10 @@
 				return;
 			}
 
+			if (['Athletic', 'Muscular', 'Highly muscular'].includes(muscle)) {
+    			ethnicity = 0;
+			}
+			
 			const base = baseWeights[height][frame];
 
 			let minWeight = base[0];
@@ -295,4 +299,5 @@
 	</script>
 </body>
 </html>
+
 
