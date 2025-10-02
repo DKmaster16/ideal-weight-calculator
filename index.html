@@ -125,6 +125,7 @@
 				<option value="-0.05">Asian</option>
 				<option value="0.03">Black</option>
 			</select>
+			<small id="ethnicity-note" style="color:#666; font-size: 13px;"></small>
 			
 			<label for="frame">Frame Size: 
 			<span class="tooltip">❔<img src="frame_size_guide.png" alt="frame size guide img"></span></label>
@@ -263,41 +264,58 @@
 			190: { small: [67.5, 73.2], medium: [71.9, 78.2], large: [76.4, 86.0] },
 		};
 
-		function calculateWeight()
-		{
-			const height = parseInt(document.getElementById('height').value);
-			const gender = document.getElementById('gender').value;
-			const frame = document.getElementById('frame').value;
-			const muscle = parseFloat(document.getElementById('muscle').value);
-			const torso = parseFloat(document.getElementById('torso').value);
-			const ape = parseFloat(document.getElementById('ape').value);
-			const ethnicity = parseFloat(document.getElementById('ethnicity').value);
+		const muscleSelect = document.getElementById('muscle');
+		const ethnicitySelect = document.getElementById('ethnicity');
+		const ethnicityNote = document.getElementById('ethnicity-note');
 
-			const baseWeights = gender === 'male' ? maleBaseWeights : femaleBaseWeights;
+		muscleSelect.addEventListener('change', () => {
+			const muscle = parseFloat(muscleSelect.value);
 
-			if (!baseWeights[height]) 
-			{
-				document.getElementById('result').innerText = 'Height out of range or not supported yet.';
-				return;
+			if (muscle >= 0.08) {
+				ethnicitySelect.disabled = true;
+				ethnicitySelect.value = "0"; // reset to neutral if you want
+				ethnicityNote.innerText = "Irrelevant for muscular body types.\n";
+			} else {
+				ethnicitySelect.disabled = false;
+				ethnicityNote.innerText = "";
 			}
+		});
 
-			if (['Athletic', 'Muscular', 'Highly muscular'].includes(muscle)) {
-    			ethnicity = 0;
-			}
-			
-			const base = baseWeights[height][frame];
+		
+		function calculateWeight() {
+		const height = parseInt(document.getElementById('height').value);
+		const gender = document.getElementById('gender').value;
+		const frame = document.getElementById('frame').value;
+		const muscle = parseFloat(document.getElementById('muscle').value);
+		const torso = parseFloat(document.getElementById('torso').value);
+		const ape = parseFloat(document.getElementById('ape').value);
+		let ethnicity = parseFloat(document.getElementById('ethnicity').value);
 
-			let minWeight = base[0];
-			let maxWeight = base[1];
-			const totalMultiplier = 1 + muscle + torso + ape + ethnicity;
+		const baseWeights = gender === 'male' ? maleBaseWeights : femaleBaseWeights;
 
-			minWeight *= totalMultiplier;
-			maxWeight *= totalMultiplier;
-
-			document.getElementById('result').innerText = `Ideal Weight Range: ${minWeight.toFixed(1)} kg – ${maxWeight.toFixed(1)} kg`;
+		if (!baseWeights[height]) {
+			document.getElementById('result').innerText = 'Height out of range or not supported yet.';
+			return;
 		}
+
+		// If the user is "Athletic" or more muscular, ignore ethnicity
+		if (muscle >= 0.08) {
+			ethnicity = 0;
+		}
+
+		const base = baseWeights[height][frame];
+
+		let minWeight = base[0];
+		let maxWeight = base[1];
+		const totalMultiplier = 1 + muscle + torso + ape + ethnicity;
+
+		minWeight *= totalMultiplier;
+		maxWeight *= totalMultiplier;
+
+		document.getElementById('result').innerText =
+			`Ideal Weight Range: ${minWeight.toFixed(1)} kg – ${maxWeight.toFixed(1)} kg`;
+	}
+
 	</script>
 </body>
 </html>
-
-
