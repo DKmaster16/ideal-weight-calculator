@@ -100,8 +100,27 @@
 <body>
 	<h1>YOUR Ideal Weight Calculator</h1>
 		<div class="container">
-			<label for="height">Height (cm):</label>
-			<input type="number" id="height" min="122" max="243" value="172">
+			
+			<!-- Unit switch -->
+			<div class="switch">
+			  <input type="checkbox" id="unitSwitch">
+			  <label for="unitSwitch">Use Imperial (ft/in)</label>
+			</div>
+
+			<!-- Height (Metric) -->
+			<div id="metricInput">
+			  <label for="heightCm">Height (cm):</label>
+			  <input type="number" id="heightCm" min="122" max="244" value="172">
+			</div>
+
+			<!-- Height (Imperial) -->
+			<div id="imperialInput" style="display:none;">
+			  <label for="heightFt">Height:</label>
+			  <div class="height-inputs">
+				<input type="number" id="heightFt" min="4" max="8" value="5"> 
+				<input type="number" id="heightIn" min="0" max="11" value="8">
+			  </div>
+			</div>
 
 			<label for="gender">Gender:</label>
 			<select id="gender">
@@ -423,9 +442,45 @@
 			}
 		});
 
+		// --- HEIGHT SWITCH ---
+		const switchInput = document.getElementById('unitSwitch');
+		const metricInput = document.getElementById('metricInput');
+		const imperialInput = document.getElementById('imperialInput');
+		const heightCm = document.getElementById('heightCm');
+		const heightFt = document.getElementById('heightFt');
+		const heightIn = document.getElementById('heightIn');
+
+		function cmToFeetInches(cm) {
+		  let totalInches = cm / 2.54;
+		  let feet = Math.floor(totalInches / 12);
+		  let inches = Math.round(totalInches % 12);
+		  if (inches === 12) { feet++; inches = 0; }
+		  return [feet, inches];
+		}
+
+		function feetInchesToCm(feet, inches) {
+		  return Math.round((feet * 12 + inches) * 2.54);
+		}
+
+		switchInput.addEventListener('change', () => {
+		  if (switchInput.checked) {
+			// Switch to imperial
+			const [ft, inVal] = cmToFeetInches(heightCm.value);
+			heightFt.value = ft;
+			heightIn.value = inVal;
+			metricInput.style.display = 'none';
+			imperialInput.style.display = 'block';
+		  } else {
+			// Switch to metric
+			const cm = feetInchesToCm(parseInt(heightFt.value), parseInt(heightIn.value));
+			heightCm.value = cm;
+			imperialInput.style.display = 'none';
+			metricInput.style.display = 'block';
+		  }
+		});
 		
 		function calculateWeight() {
-		const height = parseInt(document.getElementById('height').value);
+		let height = 172;
 		const gender = document.getElementById('gender').value;
 		const frame = document.getElementById('frame').value;
 		const muscle = parseFloat(document.getElementById('muscle').value);
@@ -435,6 +490,15 @@
 
 		const baseWeights = gender === 'male' ? maleBaseWeights : femaleBaseWeights;
 
+		if (switchInput.checked)
+		{
+			height = feetInchesToCm(parseInt(heightFt.value), parseInt(heightIn.value));
+		}
+		else
+		{
+			height = parseInt(document.getElementById('heightCm').value);
+		}
+			
 		if (!baseWeights[height]) {
 			document.getElementById('result').innerText = 'Height out of range or not supported yet.';
 			return;
@@ -461,5 +525,6 @@
 	</script>
 </body>
 </html>
+
 
 
