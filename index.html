@@ -74,11 +74,33 @@
 			color: #2f855a;
 			text-align: center;
 		}
+
+		
 		.tooltip {
-			position: relative;
-			display: inline-block;
-			margin-left: 8px;
-			cursor: pointer;
+		  position: relative;
+		  display: inline-block;
+		  margin-left: 8px;
+		  cursor: pointer;
+		}
+		.tooltiptext {
+		  visibility: hidden;
+		  opacity: 0;
+		  width: 240px;
+		  background-color: #333;
+		  color: #fff;
+		  text-align: center;
+		  border-radius: 6px;
+		  padding: 8px;
+		  position: absolute;
+		  z-index: 1;
+		  bottom: 125%;
+		  left: 50%;
+		  margin-left: -120px;
+		  transition: opacity 0.3s;
+		}
+		.tooltip.active .tooltiptext {
+		  visibility: visible;
+		  opacity: 1;
 		}
 		.tooltip img {
 			display: none;
@@ -176,6 +198,16 @@
 		</div>
 
 	<script>
+		document.querySelectorAll('.tooltip').forEach(tip => {
+		  tip.addEventListener('click', e => {
+		    e.stopPropagation();
+		    tip.classList.toggle('active');
+		  });
+		});
+		document.addEventListener('click', () => {
+		  document.querySelectorAll('.tooltip.active').forEach(t => t.classList.remove('active'));
+		});
+		
 		const maleBaseWeights = {
 			122: { small: [44.0, 46.3], medium: [45.3, 49.9], large: [48.5, 50.5] },
 			123: { small: [44.4, 46.7], medium: [45.7, 50.3], large: [48.9, 50.8] },
@@ -533,6 +565,7 @@
 	</script>
 </body>
 </html>
+
 
 
 
