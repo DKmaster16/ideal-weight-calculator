@@ -518,13 +518,22 @@
 		minWeight *= totalMultiplier;
 		maxWeight *= totalMultiplier;
 
+		if (switchInput.checked)
+		{
+			document.getElementById('result').innerText =
+			`Ideal Weight Range: ${(minWeight * 2.205).toFixed(1)} lb – ${(maxWeight * 2.205).toFixed(1)} lb`;
+		}
+		else
+		{
 		document.getElementById('result').innerText =
 			`Ideal Weight Range: ${minWeight.toFixed(1)} kg – ${maxWeight.toFixed(1)} kg`;
+		}
 	}
 
 	</script>
 </body>
 </html>
+
 
 
 
