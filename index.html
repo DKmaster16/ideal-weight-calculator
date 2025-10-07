@@ -604,15 +604,15 @@ let totalMultiplier = 1;
 		}
 		else if ( height > 214 )
 		{
-			totalMultiplier = 1 + muscle + torso + ape + ethnicity + frame * 1.1;
+			totalMultiplier = 1 + muscle + torso + ape + ethnicity * 0.333 + frame * 1.1;
 		}
 		else if ( height > 190 )
 		{
-			totalMultiplier = 1 + muscle + torso + ape + ethnicity + frame * 1.2;
+			totalMultiplier = 1 + muscle + torso + ape + ethnicity * 0.5 + frame * 1.2;
 		}
 		else if ( height > 180 )
 		{
-			totalMultiplier = 1 + muscle + torso + ape + ethnicity + frame * 1.1;
+			totalMultiplier = 1 + muscle + torso + ape + ethnicity * 0.667 + frame * 1.1;
 		}
 		else
 		{
@@ -637,4 +637,5 @@ let totalMultiplier = 1;
 	</script>
 </body>
 </html>
+
 
