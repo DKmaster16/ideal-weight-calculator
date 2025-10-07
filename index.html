@@ -546,7 +546,16 @@
 
 		let minWeight = base[0];
 		let maxWeight = base[1];
-		const totalMultiplier = 1 + muscle + torso + ape + ethnicity + frame;
+let totalMultiplier = 1;
+
+if (height < 165)
+{
+totalMultiplier = 1 + muscle + torso * 2 + ape + ethnicity + frame;
+}
+else
+{
+		totalMultiplier = 1 + muscle + torso + ape + ethnicity + frame;
+}
 
 		minWeight *= totalMultiplier;
 		maxWeight *= totalMultiplier;
