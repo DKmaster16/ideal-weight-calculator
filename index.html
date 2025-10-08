@@ -517,7 +517,7 @@
 		let height = 172;
 		const gender = document.getElementById('gender').value;
 		const frame = parseFloat(document.getElementById('frame').value);
-		const muscle = parseFloat(document.getElementById('muscle').value);
+		let muscle = parseFloat(document.getElementById('muscle').value);
 		const torso = parseFloat(document.getElementById('torso').value);
 		const ape = parseFloat(document.getElementById('ape').value);
 		let ethnicity = parseFloat(document.getElementById('ethnicity').value);
@@ -547,9 +547,25 @@
 
 		let minWeight = base[0];
 		let maxWeight = base[1];
+
+
+// Large frame low muscle situation.
+if (frame > 0)
+{
+  if (muscle < 0)
+  {
+    muscle = -0.08
+  }
+  else if (muscle = 0)
+  {
+    muscle = -0.02
+  }
+}
+
+
 let totalMultiplier = 1;
 
-		// UGLY, SO BAD
+		// Ugly height based formulas
 		if (height < 134)
 		{
 		totalMultiplier = 1 + muscle + torso * 2.04 + ape + ethnicity + frame * 1.2;
@@ -572,15 +588,15 @@ let totalMultiplier = 1;
 		}
 		else if (height < 149)
 		{
-		totalMultiplier = 1 + muscle * 0.85 + torso * 1.64 + ape + ethnicity + frame * 1.1;
+		totalMultiplier = 1 + muscle * 0.9 + torso * 1.64 + ape + ethnicity + frame * 1.1;
 		}
 		else if (height < 152)
 		{
-		totalMultiplier = 1 + muscle * 0.85 + torso * 1.56 + ape + ethnicity + frame * 1.1;
+		totalMultiplier = 1 + muscle * 0.9 + torso * 1.56 + ape + ethnicity + frame * 1.1;
 		}
 		else if (height < 155)
 		{
-		totalMultiplier = 1 + muscle * 0.85 + torso * 1.48 + ape + ethnicity + frame * 1.1;
+		totalMultiplier = 1 + muscle * 0.9 + torso * 1.48 + ape + ethnicity + frame * 1.1;
 		}
 		else if (height < 158)
 		{
