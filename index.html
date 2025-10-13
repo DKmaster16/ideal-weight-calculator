@@ -599,13 +599,13 @@
 		  }
 		}
 
-		if (torso < 0 && muscle >= 0)
+		if (torso < 0 && muscle > 0)
 		{
-			muscle *= 1.02
+			muscle += 0.001
 		}
 		else if (torso < 0 && muscle < 0)
 		{
-			muscle /= 1.02
+			muscle -= 0.001
 		}
 			
 		let totalMultiplier = 1;
@@ -698,6 +698,7 @@
 	</script>
 </body>
 </html>
+
 
 
 
