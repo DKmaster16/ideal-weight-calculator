@@ -574,18 +574,21 @@
 			document.getElementById('result').innerText = 'Height out of range or not supported yet.';
 			return;
 		}
-
-		// If the user is muscular, ignore ethnicity
-		if (muscle > 0) {
-			ethnicity = 0;
-		}
-
+			
 		const base = baseWeights[height];
 
 		let minWeight = base[0];
 		let maxWeight = base[1];
 
-
+		// If the user is muscular, ignore ethnicity and decrease lower weight range to include 8% bodyfat or similar
+		if (muscle > 0) 
+		{
+			ethnicity = 0;
+			if (muscle == 0.12)
+				minWeight *= 0.95
+			else
+				minWeight *= 0.97826;
+		}
 		// Large frame low muscle situation.
 		if (frame > 0)
 		{
@@ -698,6 +701,7 @@
 	</script>
 </body>
 </html>
+
 
 
 
