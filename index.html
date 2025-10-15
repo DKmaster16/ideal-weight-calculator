@@ -558,6 +558,7 @@
 		const torso = parseFloat(document.getElementById('torso').value);
 		const ape = parseFloat(document.getElementById('ape').value);
 		let ethnicity = parseFloat(document.getElementById('ethnicity').value);
+		let FFMI = 20;
 
 		const baseWeights = gender === 'male' ? maleBaseWeights : femaleBaseWeights;
 
@@ -688,6 +689,8 @@
 		minWeight *= totalMultiplier;
 		maxWeight *= totalMultiplier;
 
+		FFMI = gender === 'male' ? (maxWeight * 0.8 / height) : (maxWeight * 0.7 / height);
+
 		if (switchInput.checked)
 		{
 			document.getElementById('result').innerText =
@@ -696,13 +699,14 @@
 		else
 		{
 		document.getElementById('result').innerText =
-			`Ideal Weight Range: ${minWeight.toFixed(1)} kg – ${maxWeight.toFixed(1)} kg`;
+			`Ideal Weight Range: ${minWeight.toFixed(1)} kg – ${maxWeight.toFixed(1)} kg, ${(FFMI.toFixed(1))} FFMI`;
 		}
 	}
 
 	</script>
 </body>
 </html>
+
 
 
 
