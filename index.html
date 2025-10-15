@@ -586,8 +586,10 @@
 			ethnicity = 0;
 			if (muscle == 0.12)
 				minWeight *= 0.95
+			else if (muscle == 0.08)
+				minWeight *= 0.965
 			else
-				minWeight *= 0.97826;
+				minWeight *= 0.98;
 		}
 		// Large frame low muscle situation.
 		if (frame > 0)
@@ -701,6 +703,7 @@
 	</script>
 </body>
 </html>
+
 
 
 
