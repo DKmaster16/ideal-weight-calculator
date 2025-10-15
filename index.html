@@ -688,13 +688,16 @@
 
 		minWeight *= totalMultiplier;
 		maxWeight *= totalMultiplier;
+		
+		const heightMeters = height / 100;
+		const heightSqr = heightMeters * heightMeters;
 
-		FFMI = gender === 'male' ? (maxWeight * 0.8 / height) : (maxWeight * 0.7 / height);
+		FFMI = gender === 'male' ? (maxWeight * 0.8 / heightSqr) : (maxWeight * 0.7 / heightSqr); // max weight is always 20% bf for men and 30% bf for women
 
 		if (switchInput.checked)
 		{
 			document.getElementById('result').innerText =
-			`Ideal Weight Range: ${(minWeight * 2.205).toFixed(1)} lb – ${(maxWeight * 2.205).toFixed(1)} lb`;
+			`Ideal Weight Range: ${(minWeight * 2.205).toFixed(1)} lb – ${(maxWeight * 2.205).toFixed(1)} lb, ${(FFMI.toFixed(1))} FFMI`;
 		}
 		else
 		{
@@ -706,15 +709,3 @@
 	</script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
