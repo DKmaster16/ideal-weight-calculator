@@ -504,14 +504,8 @@
 		muscleSelect.addEventListener('change', () => {
 			const muscle = parseFloat(muscleSelect.value);
 
-			if (muscle >= 0.04) {
-				ethnicitySelect.disabled = true;
-				ethnicitySelect.value = "0"; // reset to neutral if you want
-				ethnicityNote.innerText = "Irrelevant for muscular body types.\n";
-			} else {
-				ethnicitySelect.disabled = false;
-				ethnicityNote.innerText = "";
-			}
+			ethnicitySelect.disabled = false;
+			ethnicityNote.innerText = "";
 		});
 
 		// --- HEIGHT SWITCH ---
@@ -646,10 +640,10 @@
 		let minWeight = base[0];
 		let maxWeight = base[1];
 
-		// If the user is muscular, ignore ethnicity and decrease lower weight range to include 8% bodyfat or similar
+		// decrease lower weight range to include 8% bodyfat or similar, decrease race impact
 		if (muscle > 0) 
 		{
-			ethnicity = 0;
+			ethnicity *= 0.5
 			if (muscle == 0.12)
 				minWeight *= 0.97
 			else if (muscle == 0.08)
@@ -695,8 +689,6 @@
 	</script>
 </body>
 </html>
-
-
 
 
 
