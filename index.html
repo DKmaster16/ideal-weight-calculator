@@ -150,13 +150,13 @@
 				<option value="female">Female</option>
 			</select>
 			
-			<label for="muscle">Muscularity:</label>
+			<label for="muscle">Hypertrophy level:</label>
 			<select id="muscle">
 				<option value="-0.04">Untrained</option>
-				<option value="0.0">Fit</option>
-				<option value="0.04">Moderately muscular</option>
-				<option value="0.08">Muscular</option>
-				<option value="0.12">Highly muscular</option>
+				<option value="0.0">Beginner</option>
+				<option value="0.04">Novice</option>
+				<option value="0.08">Intermediate</option>
+				<option value="0.12">Advanced</option>
 			</select>
 
 			<label for="ethnicity">Race:</label>
@@ -278,7 +278,7 @@
 				170: [64.2, 72.2],
 				171: [65.0, 73.1],
 				172: [65.8, 74.0],
-				173: [66.4, 74.7],
+				173: [66.4, 74.8],
 				174: [67.2, 75.6],
 				175: [68.0, 76.5],
 				176: [68.8, 77.4],
@@ -550,6 +550,70 @@
 			metricInput.style.display = 'block';
 		  }
 		});
+
+		function lerp(a, b, t) {
+		    return a + (b - a) * t;
+		}
+		
+		function getTotalMultiplier(height, muscle, torso, ape, ethnicity, frame) {
+		    // clamp height to the tuned range
+		    const h = Math.min(Math.max(height, 134), 210);
+		
+		    let b;   // base
+		    let km;  // muscle mul
+		    let kt;  // torso mul
+		    let kf;  // frame mul
+		    let ke;  // ethnicity mul
+		
+		    if (h <= 170) {
+		        // 134 -> 170
+		        const t = (h - 134) / (170 - 134);
+		
+		        b  = lerp(1.0525, 1.0,    t);
+		        km = lerp(1.15,   0.95,   t);
+		        kt = lerp(2.04,   1.08,   t);
+		        kf = lerp(1.2,    1.0,    t);
+		        ke = 1.0;
+		    } else if (h <= 180) {
+		        // 170 -> 180
+		        const t = (h - 170) / (180 - 170);
+		
+		        b  = lerp(1.0,    1.01,   t);
+		        km = lerp(0.95,   1.0,    t);
+		        kt = lerp(1.08,   0.833,  t);
+		        kf = 1.0;
+		        ke = lerp(1.0,    0.8,    t);
+		    } else if (h <= 190) {
+		        // 180 -> 190
+		        const t = (h - 180) / (190 - 180);
+		
+		        b  = lerp(1.01,   1.02,   t);
+		        km = 1.0;
+		        kt = lerp(0.833,  0.667,  t);
+		        kf = 1.0;
+		        ke = lerp(0.8,    0.4,    t);
+		    } else {
+		        // 190 -> 210+
+		        const t = (h - 190) / (210 - 190);
+		
+		        b  = lerp(1.02,   1.03,   t);
+		        km = 1.0;
+		        kt = lerp(0.667,  0.5,    t);
+		        kf = 1.0;
+		        ke = lerp(0.4,    0.2,    t);
+		    }
+		
+		    const totalMultiplier =
+		        b +
+		        muscle    * km +
+		        torso     * kt +
+		        ape +
+		        ethnicity * ke +
+		        frame     * kf;
+		
+		    return totalMultiplier;
+		}
+
 		
 		function calculateWeight() {
 		let height = 172;
@@ -614,78 +678,8 @@
 		{
 			muscle -= 0.001
 		}
-			
-		let totalMultiplier = 1;
 
-		// Ugly height based formulas
-		if (height < 134)
-		{
-		totalMultiplier = 1.0525 + muscle * 1.15 + torso * 2.04 + ape + ethnicity + frame * 1.2;
-		}
-		else if (height < 137)
-		{
-		totalMultiplier = 1.045 + muscle * 1.1 + torso * 1.96 + ape + ethnicity + frame * 1.2;
-		}
-		else if (height < 140)
-		{
-		totalMultiplier = 1.0375 + muscle * 1.05 + torso * 1.88 + ape + ethnicity + frame * 1.2;
-		}
-		else if (height < 143)
-		{
-		totalMultiplier = 1.03 + muscle + torso * 1.8 + ape + ethnicity + frame * 1.1;
-		}
-		else if (height < 146)
-		{
-		totalMultiplier = 1.0225 + muscle + torso * 1.72 + ape + ethnicity + frame * 1.1;
-		}
-		else if (height < 149)
-		{
-		totalMultiplier = 1.015 + muscle + torso * 1.64 + ape + ethnicity + frame * 1.1;
-		}
-		else if (height < 152)
-		{
-		totalMultiplier = 1.0075 + muscle * 0.95 + torso * 1.56 + ape + ethnicity + frame * 1.1;
-		}
-		else if (height < 155)
-		{
-		totalMultiplier = 1 + muscle * 0.95 + torso * 1.48 + ape + ethnicity + frame * 1.1;
-		}
-		else if (height < 158)
-		{
-		totalMultiplier = 1 + muscle * 0.95 + torso * 1.4 + ape + ethnicity + frame;
-		}
-		else if (height < 161)
-		{
-		totalMultiplier = 1 + muscle * 0.95 + torso * 1.32 + ape + ethnicity + frame;
-		}
-		else if (height < 164)
-		{
-		totalMultiplier = 1 + muscle * 0.95 + torso * 1.24 + ape + ethnicity + frame;
-		} 
-		else if (height < 167)
-		{
-		totalMultiplier = 1 + muscle * 0.95 + torso * 1.16 + ape + ethnicity + frame;
-		}
-		else if (height < 170)
-		{
-		totalMultiplier = 1 + muscle * 0.95 + torso * 1.08 + ape + ethnicity + frame;
-		}
-		else if ( height > 210 )
-		{
-			totalMultiplier = 1 + muscle + torso * 0.5 + ape + ethnicity * 0.2 + (frame + 0.03);
-		}
-		else if ( height > 190 )
-		{
-			totalMultiplier = 1 + muscle + torso * 0.667 + ape + ethnicity * 0.4 + (frame + 0.02) ;
-		}
-		else if ( height > 180 )
-		{
-			totalMultiplier = 1 + muscle + torso * 0.833 + ape + ethnicity * 0.8 + (frame + 0.01);
-		}
-		else
-		{
-				totalMultiplier = 1 + muscle + torso + ape + ethnicity + frame;
-		}
+		let totalMultiplier = getTotalMultiplier(height, muscle, torso, ape, ethnicity, frame);
 
 		minWeight *= totalMultiplier;
 		maxWeight *= totalMultiplier;
@@ -710,6 +704,7 @@
 	</script>
 </body>
 </html>
+
 
 
 
