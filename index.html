@@ -670,15 +670,6 @@
 		  }
 		}
 
-		if (torso < 0 && muscle > 0.04)
-		{
-			muscle += 0.001
-		}
-		else if (torso < 0 && muscle < 0)
-		{
-			muscle -= 0.001
-		}
-
 		let totalMultiplier = getTotalMultiplier(height, muscle, torso, ape, ethnicity, frame);
 
 		minWeight *= totalMultiplier;
@@ -704,6 +695,7 @@
 	</script>
 </body>
 </html>
+
 
 
 
