@@ -640,17 +640,12 @@
 		let minWeight = base[0];
 		let maxWeight = base[1];
 
-		// decrease lower weight range to include 8% bodyfat or similar, decrease race impact
+		// decrease race impact
 		if (muscle > 0) 
 		{
 			ethnicity *= 0.75
-			if (muscle == 0.12)
-				minWeight *= 0.97
-			else if (muscle == 0.08)
-				minWeight *= 0.98
-			else
-				minWeight *= 0.99;
 		}
+			
 		// Large frame low muscle situation.
 		if (frame > 0)
 		{
@@ -689,6 +684,7 @@
 	</script>
 </body>
 </html>
+
 
 
 
