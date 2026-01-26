@@ -3,9 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9261037885994187"
-     	crossorigin="anonymous"></script>
-	<title>Ideal Weight Calculator</title>
+	<title>Ideal Weight Calculator (updated)</title>
 	<style>
 		body {
 			font-family: 'Segoe UI', Tahoma, Geneva;
@@ -16,201 +14,230 @@
 			flex-direction: column;
 			align-items: center;
 		}
-		h1 {
-			margin-bottom: 20px;
-			color: #333;
-		}
-			.container {
-			background: #fff;
-			padding: 32px 40px;
-			border-radius: 16px;
-			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-			max-width: 500px;
-			width: 85%;
-		}
-			label {
-			font-weight: 500;
-		}
-		select {
-			margin-top: 5px;
-			padding: 8px 12px;
-			width: 100%;
-			border: 1px solid #ccc;
-			border-radius: 6px;
-			box-sizing: border-box;
-			appearance: none;
-			background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' stroke='%23333' stroke-width='2' fill='none' viewBox='0 0 24 24'%3E%3Cpath d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
-			background-repeat: no-repeat;
-			background-position: right 10px center;
-			background-size: 16px;
-			padding-right: 36px;
-		}
-		input[type=number] {
-			margin-top: 5px;
-			padding: 8px 12px;
-			width: 100%;
-			border: 1px solid #ccc;
-			border-radius: 6px;
-			box-sizing: border-box;
-		}
-		button {
-			margin-top: 16px;
-			background-color: #2b6cb0;
-			color: white;
-			border: none;
-			padding: 12px 16px;
-			font-size: 16px;
-			border-radius: 6px;
-			cursor: pointer;
-			transition: background-color 0.3s;
-		}
-		button:hover {
-			background-color: #2c5282;
-		}
-		#result {
-			margin-top: 32px;
-			font-size: 18px;
-			font-weight: 600;
-			color: #2f855a;
-			text-align: center;
-		}
-
-		
-		.tooltip {
-		  position: relative;
-		  display: inline-block;
-		  margin-left: 8px;
-		  cursor: pointer;
-		}
-		.tooltiptext {
-		  visibility: hidden;
-		  opacity: 0;
-		  width: 240px;
-		  background-color: #333;
-		  color: #fff;
-		  text-align: center;
-		  border-radius: 6px;
-		  padding: 8px;
-		  position: absolute;
-		  z-index: 1;
-		  bottom: 125%;
-		  left: 50%;
-		  margin-left: -120px;
-		  transition: opacity 0.3s;
-		}
-		.tooltip.active .tooltiptext {
-		  visibility: visible;
-		  opacity: 1;
-		}
-		.tooltip img {
-			display: none;
-			position: absolute;
-			top: -225px;
-			left: 20px;
-			z-index: 1;
-			
-			border: 1px solid #ccc;
-			border-radius: 8px;
-			box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-		}
-			.tooltip:hover img,
-			.tooltip:active img {
-			display: block;
-		}
+		h1 { margin-bottom: 20px; color: #333; }
+		.container { background: #fff; padding: 32px 40px; border-radius: 16px; box-shadow: 0 4px 8px rgba(0,0,0,0.2); max-width: 600px; width: 92%; }
+		label { font-weight: 500; display:block; margin-top:12px }
+		.height-inputs { display:flex; gap:8px }
+		input[type=number] { margin-top: 5px; padding: 8px 12px; width: 100%; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; }
+		.input-row { display:flex; gap:8px; align-items:center }
+		.input-row .half { flex:1 }
+		.select, select { margin-top:5px }
+		button { margin-top: 16px; background-color: #2b6cb0; color: white; border: none; padding: 12px 16px; font-size: 16px; border-radius: 6px; cursor: pointer; transition: background-color 0.3s; }
+		button:hover { background-color: #2c5282 }
+		#result { margin-top: 24px; font-size: 18px; font-weight: 600; color: #2f855a; text-align: center; }
+		.small { font-size:13px; color:#666 }
+		.unit-label { min-width:44px; text-align:right; display:inline-block; margin-left:6px }
+		.horizontal-group { display: flex; gap: 20px; flex-wrap: wrap; /* allows wrapping on small screens */ }
+		.field { display: flex; flex-direction: column; min-width: 50px; }
 	</style>
 </head>
 <body>
 	<h1>YOUR Ideal Weight Calculator</h1>
-		<div class="container">
-			
-			<!-- Unit switch -->
-			<div class="switch">
-			  <input type="checkbox" id="unitSwitch">
-			  <label for="unitSwitch">Use Imperial (ft/in)</label>
-			</div>
+	<div class="container">
 
-			<!-- Height (Metric) -->
-			<div id="metricInput">
-			  <label for="heightCm">Height (cm):</label>
-			  <input type="number" id="heightCm" min="103" max="243" value="172">
-			</div>
-
-			<!-- Height (Imperial) -->
-			<div id="imperialInput" style="display:none;">
-			  <label for="heightFt">Height:</label>
-			  <div class="height-inputs">
-				<input type="number" id="heightFt" min="3" max="8" value="5"> 
-				<input type="number" id="heightIn" min="0" max="11" value="8">
-			  </div>
-			</div>
-
-			<label for="gender">Gender:</label>
-			<select id="gender">
-				<option value="male">Male</option>
-				<option value="female">Female</option>
-			</select>
-			
-			<label for="muscle">Hypertrophy level:</label>
-			<select id="muscle">
-				<option value="-0.075">Untrained</option>
-				<option value="-0.03">Beginner (3 months)</option>
-				<option value="0.00">Novice (6 months)</option>
-    <option value="0.03">Late Novice (1 year)</option>
-				<option value="0.08">Intermediate (2 years)</option>
-    <option value="0.12">Late Intermediate (3 years)</option>
-				<option value="0.155">Advanced (5 years)</option>
-			<option value="0.175">Late Advanced (7 years)</option>
-			</select>
-
-			<label for="ethnicity">Race:</label>
-			<select id="ethnicity">
-				<option value="0">White/Mixed</option>
-				<option value="-0.04">Asian</option>
-				<option value="0.03">Black</option>
-			</select>
-			<small id="ethnicity-note" style="color:#666; font-size: 13px;"></small>
-			
-			<label for="frame">Frame Size: 
-			<!--<span class="tooltip">❔<img src="frame_size_guide.png" alt="frame size guide img"></span></label>-->
-			<select id="frame">
-				<option value="0.0">Medium</option>
-				<option value="-0.05">Small</option>
-				<option value="0.05">Large</option>
-			</select>
-
-			<label for="torso">Torso Length: 
-			<!--<span class="tooltip">❔<img src="torso_guide.png" alt="torso length guide img" ></span></label>-->
-			<select id="torso">
-				<option value="0">Medium</option>
-				<option value="-0.05">Short</option>
-				<option value="0.05">Long</option>
-			</select>
-
-			<label for="ape">Ape Index: 
-			<!--<span class="tooltip">❔<img src="ape_index.png" alt="ape index guide img" ></span></label>-->
-			<select id="ape">
-				<option value="0">less than 5cm</option>
-				<option value="0.01">+5-12cm</option>
-				<option value="0.02">+12cm</option>
-			</select>
-
-			<button onclick="calculateWeight()">Calculate</button>
-
-			<h2 id="result">Ideal Weight Range will be here.</h2>
+		<!-- Unit switch -->
+		<div class="switch input-row">
+		  <input type="checkbox" id="unitSwitch">
+		  <label for="unitSwitch">Use Imperial (ft/in, in)</label>
 		</div>
 
-	<script>
-		document.querySelectorAll('.tooltip').forEach(tip => {
-		  tip.addEventListener('click', e => {
-		    e.stopPropagation();
-		    tip.classList.toggle('active');
-		  });
-		});
-		document.addEventListener('click', () => {
-		  document.querySelectorAll('.tooltip.active').forEach(t => t.classList.remove('active'));
-		});
+		<!-- Height (Metric) -->
+		<div id="metricInput">
+		  <label for="heightCm">Height (cm):</label>
+		  <input type="number" id="heightCm" min="103" max="243" value="172">
+		</div>
+
+		<!-- Height (Imperial) -->
+		<div id="imperialInput" style="display:none;">
+		  <label for="heightFt">Height:</label>
+		  <div class="height-inputs">
+			<input type="number" id="heightFt" min="3" max="8" value="5"> 
+			<input type="number" id="heightIn" min="0" max="11" value="8">
+		  </div>
+		</div>
 		
-		const maleBaseWeights = {
+		<div id="wingspanCmDiv">
+			<label for="wingspanCmLabel">Wingspan (cm):</label>
+			<input type="number" id="wingspanCm" min="100" max="260" value="172">
+		</div>
+		
+		<div id="wingspanImperial" style="display:none;">
+		  <label>Wingspan:</label>
+		  <div class="height-inputs">
+			<input type="number" id="wingspanFt" min="3" max="9" value="5">
+			<input type="number" id="wingspanIn" min="0" max="11" value="8">
+		  </div>
+		</div>
+		
+
+		<div class="horizontal-group">
+		  <div class="field">
+			<label for="gender">Gender:</label>
+			<select id="gender">
+			  <option value="male">Male</option>
+			  <option value="female">Female</option>
+			</select>
+		  </div>
+
+		  <div class="field">
+			<label for="ethnicity">Race:</label>
+			<select id="ethnicity">
+			  <option value="0">White/Mixed</option>
+			  <option value="-0.04">Asian</option>
+			  <option value="0.03">Black</option>
+			</select>
+		  </div>
+
+		  <div class="field">
+			<label for="torso">Torso Length:</label>
+			<select id="torso">
+			  <option value="0">Medium</option>
+			  <option value="-0.03">Short</option>
+			  <option value="0.03">Long</option>
+			</select>
+		  </div>
+		</div>
+
+		<!-- Years of experience replaces hypertrophy select -->
+		<label for="yearsExperience">Years of lifting experience:</label>
+		<input type="number" id="yearsExperience" min="0" max="7" step="0.1" value="0">
+		<div class="small">This value will be interpolated against preset muscularity points (0 -> untrained ... 7 -> late advanced).</div>
+
+		<!-- Wrist & Ankle inputs replace frame size -->
+		<label>Wrist circumference:</label>
+		<div class="input-row">
+		  <input type="number" id="wristCm" class="half" min="10" max="25" step="0.1" value="17.5">
+		  <div class="unit-label" id="wristUnit">cm</div>
+		</div>
+
+		<label>Ankle circumference:</label>
+		<div class="input-row">
+		  <input type="number" id="ankleCm" class="half" min="12" max="35" step="0.1" value="23.0">
+		  <div class="unit-label" id="ankleUnit">cm</div>
+		</div>
+		
+		<button onclick="calculateWeight()">Calculate</button>
+		
+		<p></p>
+		<h2 id="result">Ideal Weight Range will be here.</h2>
+	</div>
+
+<script>
+	// --- helper conversions ---
+	function cmToFeetInches(cm) {
+	  let totalInches = cm / 2.54;
+	  let feet = Math.floor(totalInches / 12);
+	  let inches = Math.round(totalInches % 12);
+	  if (inches === 12) { feet++; inches = 0; }
+	  return [feet, inches];
+	}
+	function feetInchesToCm(feet, inches) {
+	  return Math.round((feet * 12 + inches) * 2.54);
+	}
+	function cmToInches(cm) { return +(cm / 2.54).toFixed(2); }
+	function inchesToCm(inches) { return +(inches * 2.54).toFixed(1); }
+
+	// --- percentile tables (by gender) ---
+	const percentiles = [1,5,15,25,50,75,85,95,99];
+
+	const maleWrist = [15.6,16.2,16.7,17.0,17.6,18.2,18.5,19.1,19.8];
+	const maleAnkle = [19.8,20.6,21.5,21.9,22.8,23.9,24.4,25.4,26.8];
+
+	const femaleWrist = [13.8,14.2,14.7,15.0,15.4,16.0,16.3,16.8,17.4];
+	const femaleAnkle = [18.5,19.3,20.0,20.5,21.5,22.5,23.1,24.2,25.5];
+
+	function getPercentileFromValue(v, arr) {
+		// arr should be increasing; percentiles aligns with `percentiles` array
+		if (v <= arr[0]) return percentiles[0];
+		if (v >= arr[arr.length-1]) return percentiles[percentiles.length-1];
+		for (let i=0;i<arr.length-1;i++) {
+			if (v >= arr[i] && v <= arr[i+1]) {
+				const t = (v - arr[i]) / (arr[i+1] - arr[i]);
+				return percentiles[i] + t * (percentiles[i+1] - percentiles[i]);
+			}
+		}
+		return 50; // fallback
+	}
+
+	function lerp(a,b,t){ return a + (b-a)*t }
+
+	// --- muscle keypoints (years -> muscle multiplier) ---
+	const muscleKey = [
+		{y:0, v:-0.08},    // untrained
+		{y:0.25, v:-0.04},  // beginner (3 months)
+		{y:0.5, v:-0.01},    // novice (6 months)
+		{y:1, v:0.03},      // late novice (1 year)
+		{y:2, v:0.08},      // intermediate
+		{y:3, v:0.12},      // late intermediate
+		{y:5, v:0.155},     // advanced
+		{y:7, v:0.175},     // late advanced
+		{y:10, v:0.2},     // elite
+	];
+
+	function muscleFromYears(years){
+		const y = Math.min(Math.max(years, 0), 10);
+		for (let i=0;i<muscleKey.length-1;i++){
+			const a = muscleKey[i], b = muscleKey[i+1];
+			if (y >= a.y && y <= b.y){
+				const t = (y - a.y) / (b.y - a.y);
+				return lerp(a.v, b.v, t);
+			}
+		}
+		return muscleKey[muscleKey.length-1].v;
+	}
+
+	// --- UI references ---
+	const switchInput = document.getElementById('unitSwitch');
+	const metricInput = document.getElementById('metricInput');
+	const imperialInput = document.getElementById('imperialInput');
+	const heightCm = document.getElementById('heightCm');
+	const heightFt = document.getElementById('heightFt');
+	const heightIn = document.getElementById('heightIn');
+
+	const wristCm = document.getElementById('wristCm');
+	const ankleCm = document.getElementById('ankleCm');
+	const wristUnit = document.getElementById('wristUnit');
+	const ankleUnit = document.getElementById('ankleUnit');
+
+	// When toggling units we convert wrist/ankle and height accordingly
+	switchInput.addEventListener('change', () => {
+	  if (switchInput.checked) {
+		// to imperial
+		const [wFt, wIn] = cmToFeetInches(parseFloat(wingspanCm.value || heightCm.value));
+		wingspanFt.value = wFt;
+		wingspanIn.value = wIn;
+		document.getElementById('wingspanImperial').style.display = 'block';
+		document.getElementById('wingspanCmDiv').style.display = 'none';
+
+		const [ft, inches] = cmToFeetInches(parseFloat(heightCm.value || 172));
+		heightFt.value = ft; heightIn.value = inches;
+		metricInput.style.display = 'none'; imperialInput.style.display = 'block';
+
+		// convert wrist/ankle cm -> inches (allow decimals)
+		wristCm.value = +( (parseFloat(wristCm.value) || 0) / 2.54 ).toFixed(2);
+		ankleCm.value = +( (parseFloat(ankleCm.value) || 0) / 2.54 ).toFixed(2);
+		wristUnit.innerText = 'in'; ankleUnit.innerText = 'in';
+	  } else {
+		// to metric
+		wingspanCm.value = feetInchesToCm(
+			parseInt(wingspanFt.value || 5),
+			parseInt(wingspanIn.value || 8)
+		);
+		document.getElementById('wingspanImperial').style.display = 'none';
+		document.getElementById('wingspanCmDiv').style.display = 'block';
+		
+		const cm = feetInchesToCm(parseInt(heightFt.value || 5), parseInt(heightIn.value || 8));
+		heightCm.value = cm;
+		imperialInput.style.display = 'none'; metricInput.style.display = 'block';
+
+		wristCm.value = +( (parseFloat(wristCm.value) || 0) * 2.54 ).toFixed(1);
+		ankleCm.value = +( (parseFloat(ankleCm.value) || 0) * 2.54 ).toFixed(1);
+		wristUnit.innerText = 'cm'; ankleUnit.innerText = 'cm';
+	  }
+	});
+
+	// --- base weights (unchanged) ---
+	const maleBaseWeights = {
 				103: [22.9, 25.8],
 				104: [23.3, 26.2],
 				105: [23.7, 26.7],
@@ -499,196 +526,128 @@
 				243: [131.4, 153.9],
 			};
 
+	function computeFrameMultiplier(gender, wristValCm, ankleValCm){
+		// choose arrays
+		const wArr = gender === 'male' ? maleWrist : femaleWrist;
+		const aArr = gender === 'male' ? maleAnkle : femaleAnkle;
+		const wp = getPercentileFromValue(wristValCm, wArr);
+		const ap = getPercentileFromValue(ankleValCm, aArr);
+		const avgP = (wp + ap) / 2.0; // between ~1 and 99
+		// map 1 -> -0.05, 99 -> +0.05
+		const norm = (avgP - 1) / (99 - 1);
+		const frameMul = lerp(-0.05, 0.05, Math.min(Math.max(norm,0),1));
+		return frameMul;
+	}
 
-		const muscleSelect = document.getElementById('muscle');
-		const ethnicitySelect = document.getElementById('ethnicity');
-		const ethnicityNote = document.getElementById('ethnicity-note');
-
-		muscleSelect.addEventListener('change', () => {
-			const muscle = parseFloat(muscleSelect.value);
-
-			ethnicitySelect.disabled = false;
-			ethnicityNote.innerText = "";
-		});
-
-		// --- HEIGHT SWITCH ---
-		const switchInput = document.getElementById('unitSwitch');
-		const metricInput = document.getElementById('metricInput');
-		const imperialInput = document.getElementById('imperialInput');
-		const heightCm = document.getElementById('heightCm');
-		const heightFt = document.getElementById('heightFt');
-		const heightIn = document.getElementById('heightIn');
-
-		function cmToFeetInches(cm) {
-		  let totalInches = cm / 2.54;
-		  let feet = Math.floor(totalInches / 12);
-		  let inches = Math.round(totalInches % 12);
-		  if (inches === 12) { feet++; inches = 0; }
-		  return [feet, inches];
-		}
-
-		function feetInchesToCm(feet, inches) {
-		  return Math.round((feet * 12 + inches) * 2.54);
-		}
-
-		switchInput.addEventListener('change', () => {
-		  if (switchInput.checked) {
-			// Switch to imperial
-			const [ft, inVal] = cmToFeetInches(heightCm.value);
-			heightFt.value = ft;
-			heightIn.value = inVal;
-			metricInput.style.display = 'none';
-			imperialInput.style.display = 'block';
-		  } else {
-			// Switch to metric
-			const cm = feetInchesToCm(parseInt(heightFt.value), parseInt(heightIn.value));
-			heightCm.value = cm;
-			imperialInput.style.display = 'none';
-			metricInput.style.display = 'block';
-		  }
-		});
-
-		function lerp(a, b, t) {
-		    return a + (b - a) * t;
-		}
-		
-		function getTotalMultiplier(height, muscle, torso, ape, ethnicity, frame) {
-		    // clamp height to the tuned range
-		    const h = Math.min(Math.max(height, 134), 210);
-		
-		    let b;   // base
-		    let km;  // muscle mul
-		    let kt;  // torso mul
-		    let kf;  // frame mul
-		    let ke;  // ethnicity mul
-		
-		    if (h <= 170) {
-		        // 134 -> 170
-		        const t = (h - 134) / (170 - 134);
-		
-		        b  = lerp(1.0525, 1.0,    t);
-		        km = lerp(1.15,   0.95,   t);
-		        kt = lerp(2.04,   1.08,   t);
-		        kf = lerp(1.2,    1.0,    t);
-		        ke = 1.0;
-		    } else if (h <= 180) {
-		        // 170 -> 180
-		        const t = (h - 170) / (180 - 170);
-		
-		        b  = lerp(1.0,    1.01,   t);
-		        km = lerp(0.95,   1.0,    t);
-		        kt = lerp(1.08,   0.833,  t);
-		        kf = 1.0;
-		        ke = lerp(1.0,    0.8,    t);
-		    } else if (h <= 190) {
-		        // 180 -> 190
-		        const t = (h - 180) / (190 - 180);
-		
-		        b  = lerp(1.01,   1.02,   t);
-		        km = 1.0;
-		        kt = lerp(0.833,  0.667,  t);
-		        kf = 1.0;
-		        ke = lerp(0.8,    0.4,    t);
-		    } else {
-		        // 190 -> 210+
-		        const t = (h - 190) / (210 - 190);
-		
-		        b  = lerp(1.02,   1.03,   t);
-		        km = 1.0;
-		        kt = lerp(0.667,  0.5,    t);
-		        kf = 1.0;
-		        ke = lerp(0.4,    0.2,    t);
-		    }
-		
-		    const totalMultiplier =
-		        b +
-		        muscle    * km +
-		        torso     * kt +
-		        ape +
-		        ethnicity * ke +
-		        frame     * kf;
-		
-		    return totalMultiplier;
-		}
-
-		
-		function calculateWeight() {
+	function calculateWeight(){
 		let height = 172;
 		const gender = document.getElementById('gender').value;
-		const frame = parseFloat(document.getElementById('frame').value);
-		let muscle = parseFloat(document.getElementById('muscle').value);
-		const torso = parseFloat(document.getElementById('torso').value);
-		const ape = parseFloat(document.getElementById('ape').value);
-		let ethnicity = parseFloat(document.getElementById('ethnicity').value);
-		let FFMI = 20;
+		const years = parseFloat(document.getElementById('yearsExperience').value) || 0;
+		let muscle = muscleFromYears(years);
+		const torso = parseFloat(document.getElementById('torso') ? document.getElementById('torso').value : 0) || 0;
+		let ethnicity = parseFloat(document.getElementById('ethnicity').value) || 0;
+
+		// --- wingspan → ape index ---
+		let wingspan;
+
+		if (switchInput.checked) {
+		  wingspan = feetInchesToCm(
+			parseInt(wingspanFt.value || heightFt.value),
+			parseInt(wingspanIn.value || heightIn.value)
+		  );
+		} else {
+		  wingspan = parseFloat(document.getElementById('wingspanCm').value) || height;
+		}
+
+		// ape index in cm
+		const apeIndex = wingspan - height;
+
+		// clamp to [-20, +20]
+		const apeClamped = Math.max(-20, Math.min(20, apeIndex));
+
+		// lerp: -20 → -0.02, +20 → +0.02
+		const ape = lerp(-0.02, 0.02, (apeClamped + 20) / 40);
 
 		const baseWeights = gender === 'male' ? maleBaseWeights : femaleBaseWeights;
 
-		if (switchInput.checked)
-		{
-			height = feetInchesToCm(parseInt(heightFt.value), parseInt(heightIn.value));
+		if (switchInput.checked) {
+			height = feetInchesToCm(parseInt(heightFt.value || 5), parseInt(heightIn.value || 8));
+			// current wrist/ankle inputs when imperial are in inches, convert to cm for calculations
+			var wristCmVal = inchesToCm(parseFloat(wristCm.value || 0));
+			var ankleCmVal = inchesToCm(parseFloat(ankleCm.value || 0));
+		} else {
+			height = parseInt(document.getElementById('heightCm').value) || 172;
+			var wristCmVal = parseFloat(wristCm.value || 0);
+			var ankleCmVal = parseFloat(ankleCm.value || 0);
 		}
-		else
-		{
-			height = parseInt(document.getElementById('heightCm').value);
-		}
-			
+
+		// compute frame multiplier from wrist+ankle
+		const frame = computeFrameMultiplier(gender, wristCmVal, ankleCmVal);
+
+		// clamp height and check base weight availability
 		if (!baseWeights[height]) {
 			document.getElementById('result').innerText = 'Height out of range or not supported yet.';
 			return;
 		}
-			
-		const base = baseWeights[height];
 
+		const base = baseWeights[height];
 		let minWeight = base[0];
 		let maxWeight = base[1];
 
-		// decrease race impact
-		if (muscle > 0) 
-		{
-			ethnicity *= 0.75
-		}
-			
-		// Large frame low muscle situation.
-		if (frame > 0)
-		{
-		  if (muscle < 0)
-		  {
-		    muscle = -0.08
-		  }
-		  else if (muscle == 0)
-		  {
-		    muscle = -0.02
-		  }
-		}
+		// decrease race impact if muscle > 0
+		if (muscle > 0) { ethnicity *= 0.75 }
 
 		let totalMultiplier = getTotalMultiplier(height, muscle, torso, ape, ethnicity, frame);
 
-		minWeight *= totalMultiplier;
-		maxWeight *= totalMultiplier;
-		
-		const heightMeters = height / 100;
-		const heightSqr = heightMeters * heightMeters;
+		minWeight *= totalMultiplier; maxWeight *= totalMultiplier;
 
-		FFMI = gender === 'male' ? (maxWeight * 0.8 / heightSqr) : (maxWeight * 0.7 / heightSqr); // max weight is always 20% bf for men and 30% bf for women
+		const heightMeters = height / 100; const heightSqr = heightMeters * heightMeters;
+		let FFMI = gender === 'male' ? (maxWeight * 0.8 / heightSqr) : (maxWeight * 0.7 / heightSqr);
 
-		if (switchInput.checked)
-		{
-			document.getElementById('result').innerText =
-			`Ideal Weight Range: ${(minWeight * 2.205).toFixed(1)} lb – ${(maxWeight * 2.205).toFixed(1)} lb, ${(FFMI.toFixed(1))} FFMI`;
-		}
-		else
-		{
-		document.getElementById('result').innerText =
-			`Ideal Weight Range: ${minWeight.toFixed(1)} kg – ${maxWeight.toFixed(1)} kg, ${(FFMI.toFixed(1))} FFMI`;
+		if (switchInput.checked) {
+			document.getElementById('result').innerText = `Ideal Weight Range: ${(minWeight * 2.205).toFixed(1)} lb – ${(maxWeight * 2.205).toFixed(1)} lb, ${(FFMI.toFixed(1))} FFMI`;
+		} else {
+			document.getElementById('result').innerText = `Ideal Weight Range: ${minWeight.toFixed(1)} kg – ${maxWeight.toFixed(1)} kg, ${(FFMI.toFixed(1))} FFMI`;
 		}
 	}
 
-	</script>
+	// --- keep original getTotalMultiplier function from your code ---
+	function getTotalMultiplier(height, muscle, torso, ape, ethnicity, frame) {
+	    const h = Math.min(Math.max(height, 134), 210);
+	    let b, km, kt, kf, ke;
+	    if (h <= 170) {
+	        const t = (h - 134) / (170 - 134);
+	        b  = lerp(1.0525, 1.0,    t);
+	        km = lerp(1.15,   0.95,   t);
+	        kt = lerp(2.04,   1.08,   t);
+	        kf = lerp(1.2,    1.0,    t);
+	        ke = 1.0;
+	    } else if (h <= 180) {
+	        const t = (h - 170) / (180 - 170);
+	        b  = lerp(1.0,    1.01,   t);
+	        km = lerp(0.95,   1.0,    t);
+	        kt = lerp(1.08,   0.833,  t);
+	        kf = 1.0;
+	        ke = lerp(1.0,    0.8,    t);
+	    } else if (h <= 190) {
+	        const t = (h - 180) / (190 - 180);
+	        b  = lerp(1.01,   1.02,   t);
+	        km = 1.0;
+	        kt = lerp(0.833,  0.667,  t);
+	        kf = 1.0;
+	        ke = lerp(0.8,    0.4,    t);
+	    } else {
+	        const t = (h - 190) / (210 - 190);
+	        b  = lerp(1.02,   1.03,   t);
+	        km = 1.0;
+	        kt = lerp(0.667,  0.5,    t);
+	        kf = 1.0;
+	        ke = lerp(0.4,    0.2,    t);
+	    }
+	    const totalMultiplier = b + muscle * km + torso * kt + ape + ethnicity * ke + frame * kf;
+	    return totalMultiplier;
+	}
+
+</script>
 </body>
 </html>
-
-
-
-
-
