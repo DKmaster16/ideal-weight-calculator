@@ -162,28 +162,46 @@
 	function lerp(a,b,t){ return a + (b-a)*t }
 
 	// --- muscle keypoints (years -> muscle multiplier) ---
-	const muscleKey = [
-		{y:0, v:-0.08},    // untrained
-		{y:0.25, v:-0.04},  // beginner (3 months)
-		{y:0.5, v:-0.01},    // novice (6 months)
-		{y:1, v:0.03},      // late novice (1 year)
-		{y:2, v:0.08},      // intermediate
-		{y:3, v:0.12},      // late intermediate
-		{y:5, v:0.155},     // advanced
-		{y:7, v:0.175},     // late advanced
-		{y:10, v:0.2},     // elite
+	const muscleKeyMale = [
+	  { y: 0,    v: -0.08 },
+	  { y: 0.25, v: -0.04 },
+	  { y: 0.5,  v: -0.01 },
+	  { y: 1,    v:  0.03 },
+	  { y: 2,    v:  0.08 },
+	  { y: 3,    v:  0.12 },
+	  { y: 5,    v:  0.155 },
+	  { y: 7,    v:  0.175 },
+	  { y: 10,   v:  0.20 },
 	];
 
-	function muscleFromYears(years){
+	const muscleKeyFemale = [
+	  { y: 0,    v: -0.08 },
+	  { y: 0.25, v: -0.05 },
+	  { y: 0.5,  v: -0.03 },
+	  { y: 1,    v: -0.01 },
+	  { y: 2,    v:  0.03 },
+	  { y: 3,    v:  0.06 },
+	  { y: 5,    v:  0.09 },
+	  { y: 7,    v:  0.105 },
+	  { y: 10,   v:  0.123 },
+	];
+
+	function muscleFromYears(years, gender){
 		const y = Math.min(Math.max(years, 0), 10);
-		for (let i=0;i<muscleKey.length-1;i++){
-			const a = muscleKey[i], b = muscleKey[i+1];
-			if (y >= a.y && y <= b.y){
-				const t = (y - a.y) / (b.y - a.y);
-				return lerp(a.v, b.v, t);
+		const key = (gender === "female") ? muscleKeyFemale : muscleKeyMale;
+
+		for (let i = 1; i < key.length; i++){
+			if (y <= key[i].y){
+				const prev = key[i - 1];
+				const next = key[i];
+
+				const t = (y - prev.y) / (next.y - prev.y);
+				return prev.v + t * (next.v - prev.v);
 			}
 		}
-		return muscleKey[muscleKey.length-1].v;
+
+		// fallback (should never really hit)
+		return key[key.length - 1].v;
 	}
 
 	// --- UI references ---
@@ -543,7 +561,7 @@
 		let height = 172;
 		const gender = document.getElementById('gender').value;
 		const years = parseFloat(document.getElementById('yearsExperience').value) || 0;
-		let muscle = muscleFromYears(years);
+		let muscle = muscleFromYears(years, gender);
 		const torso = parseFloat(document.getElementById('torso') ? document.getElementById('torso').value : 0) || 0;
 		let ethnicity = parseFloat(document.getElementById('ethnicity').value) || 0;
 
@@ -651,3 +669,4 @@
 </script>
 </body>
 </html>
+
