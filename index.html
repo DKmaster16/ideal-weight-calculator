@@ -652,23 +652,23 @@
 	        const t = (h - 170) / (180 - 170);
 	        b  = lerp(1.0,    1.01,   t);
 	        km = lerp(0.95,   1.0,    t);
-	        kt = lerp(1.08,   0.833,  t);
+	        kt = lerp(1.08,   1.0,  t);
 	        kf = 1.0;
 	        ke = lerp(1.0,    0.8,    t);
 	    } else if (h <= 190) {
 	        const t = (h - 180) / (190 - 180);
 	        b  = lerp(1.01,   1.02,   t);
 	        km = 1.0;
-	        kt = lerp(0.833,  0.667,  t);
+	        kt = lerp(1.0,  0.92,  t);
 	        kf = 1.0;
-	        ke = lerp(0.8,    0.4,    t);
+	        ke = lerp(0.8,    0.6,    t);
 	    } else {
 	        const t = (h - 190) / (210 - 190);
 	        b  = lerp(1.02,   1.03,   t);
 	        km = 1.0;
-	        kt = lerp(0.667,  0.5,    t);
+	        kt = lerp(0.92,  0.8,    t);
 	        kf = 1.0;
-	        ke = lerp(0.4,    0.2,    t);
+	        ke = lerp(0.6,    0.4,    t);
 	    }
 	    const totalMultiplier = b + muscle * km + torso * kt + ape + ethnicity * ke + frame * kf;
 	    return totalMultiplier;
