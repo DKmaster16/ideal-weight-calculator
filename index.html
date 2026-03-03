@@ -83,10 +83,9 @@
 			<label for="ethnicity">Population:</label>
 			<select id="ethnicity">
 			  <option value="0">Caucasian</option>
-			  <option value="0.02">African American</option>
-
+			  <option value="0.015">African American</option>
 			  <option value="-0.02">Latin American</option>
-			  <option value="0.01">East African</option>
+			  <option value="-0.03">East African</option>
 			  <option value="0.03">West African</option>
 			  <option value="-0.01">Central Asian</option>
 			  <option value="-0.04">East Asian</option>
@@ -98,8 +97,8 @@
 			<label for="torso">Torso Length:</label>
 			<select id="torso">
 			  <option value="0">Medium</option>
-			  <option value="-0.03">Short</option>
-			  <option value="0.03">Long</option>
+			  <option value="-0.025">Short</option>
+			  <option value="0.025">Long</option>
 			</select>
 		  </div>
 		</div>
@@ -170,8 +169,8 @@
 	// --- muscle keypoints (years -> muscle multiplier) ---
 	const muscleKeyMale = [
 	  { y: 0,    v: -0.08 },
-	  { y: 0.25, v: -0.04 },
-	  { y: 0.5,  v: -0.01 },
+	  { y: 0.25, v: -0.05 },
+	  { y: 0.5,  v: -0.02 },
 	  { y: 1,    v:  0.03 },
 	  { y: 2,    v:  0.08 },
 	  { y: 3,    v:  0.12 },
@@ -183,8 +182,8 @@
 
 	const muscleKeyFemale = [
 	  { y: 0,    v: -0.08 },
-	  { y: 0.25, v: -0.05 },
-	  { y: 0.5,  v: -0.03 },
+	  { y: 0.25, v: -0.06 },
+	  { y: 0.5,  v: -0.04 },
 	  { y: 1,    v: -0.01 },
 	  { y: 2,    v:  0.03 },
 	  { y: 3,    v:  0.06 },
@@ -559,9 +558,9 @@
 		const wp = getPercentileFromValue(wristValCm, wArr);
 		const ap = getPercentileFromValue(ankleValCm, aArr);
 		const avgP = (wp + ap) / 2.0; // between ~1 and 99
-		// map 1 -> -0.12, 99 -> +0.12
+		// map 1 -> -0.10, 99 -> +0.10
 		const norm = (avgP - 1) / (99 - 1);
-		const frameMul = lerp(-0.12, 0.12, Math.min(Math.max(norm,0),1));
+		const frameMul = lerp(-0.1, 0.1, Math.min(Math.max(norm,0),1));
 		return frameMul;
 	}
 
@@ -677,6 +676,7 @@
 </script>
 </body>
 </html>
+
 
 
 
