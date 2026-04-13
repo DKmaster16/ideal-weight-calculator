@@ -568,6 +568,18 @@
 
 	function calculateWeight(){
 		let height = 172;
+
+if (switchInput.checked) {
+			height = feetInchesToCm(parseInt(heightFt.value || 5), parseInt(heightIn.value || 8));
+			// current wrist/ankle inputs when imperial are in inches, convert to cm for calculations
+			var wristCmVal = inchesToCm(parseFloat(wristCm.value || 0));
+			var ankleCmVal = inchesToCm(parseFloat(ankleCm.value || 0));
+		} else {
+			height = parseInt(document.getElementById('heightCm').value) || 172;
+			var wristCmVal = parseFloat(wristCm.value || 0);
+			var ankleCmVal = parseFloat(ankleCm.value || 0);
+		}
+
 		const gender = document.getElementById('gender').value;
 		const years = parseFloat(document.getElementById('yearsExperience').value) || 0;
 		let muscle = muscleFromYears(years, gender);
@@ -597,17 +609,7 @@
 
 		const baseWeights = gender === 'male' ? maleBaseWeights : femaleBaseWeights;
 
-		if (switchInput.checked) {
-			height = feetInchesToCm(parseInt(heightFt.value || 5), parseInt(heightIn.value || 8));
-			// current wrist/ankle inputs when imperial are in inches, convert to cm for calculations
-			var wristCmVal = inchesToCm(parseFloat(wristCm.value || 0));
-			var ankleCmVal = inchesToCm(parseFloat(ankleCm.value || 0));
-		} else {
-			height = parseInt(document.getElementById('heightCm').value) || 172;
-			var wristCmVal = parseFloat(wristCm.value || 0);
-			var ankleCmVal = parseFloat(ankleCm.value || 0);
-		}
-
+		
 		// compute frame multiplier from wrist+ankle
 		const frame = computeFrameMultiplier(gender, wristCmVal, ankleCmVal);
 
