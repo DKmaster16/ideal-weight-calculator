@@ -632,11 +632,12 @@ if (switchInput.checked) {
 
 		const heightMeters = height / 100; const heightSqr = heightMeters * heightMeters;
 		let FFMI = gender === 'male' ? (maxWeight * 0.8 / heightSqr) : (maxWeight * 0.7 / heightSqr);
+  const NormFFMI = FFMI + 6.1 * (1.8 - heightMeters);
 
 		if (switchInput.checked) {
-			document.getElementById('result').innerText = `Ideal Weight Range: ${(minWeight * 2.205).toFixed(1)} lb – ${(maxWeight * 2.205).toFixed(1)} lb, ${(FFMI.toFixed(1))} FFMI`;
+			document.getElementById('result').innerText = `Ideal Weight Range: ${(minWeight * 2.205).toFixed(1)} lb – ${(maxWeight * 2.205).toFixed(1)} lb, ${(NormFFMI.toFixed(2))} Normalized FFMI`;
 		} else {
-			document.getElementById('result').innerText = `Ideal Weight Range: ${minWeight.toFixed(1)} kg – ${maxWeight.toFixed(1)} kg, ${(FFMI.toFixed(1))} FFMI`;
+			document.getElementById('result').innerText = `Ideal Weight Range: ${minWeight.toFixed(1)} kg – ${maxWeight.toFixed(1)} kg, ${(NormFFMI.toFixed(2))} Normalized FFMI`;
 		}
 	}
 
